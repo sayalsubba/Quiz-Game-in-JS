@@ -1,6 +1,6 @@
 const questions = [
     {
-        question1: "Which is the Largest Animal on this Planet?",
+        question: "Which is the Largest Animal on this Planet?",
         options: [
             { text: "Shark", correct: "false" },
             { text: "Whale", correct: "true" },
@@ -9,7 +9,7 @@ const questions = [
         ]
     },
     {
-        question2: "Which is the smallest country in the world?",
+        question: "Which is the smallest country in the world?",
         options: [
             { text: "Nepal", correct: "false" },
             { text: "Bhutan", correct: "false" },
@@ -18,13 +18,62 @@ const questions = [
         ]
     },
     {
-        question3:"which is the hightest mountain in the world?",
-        options:[
-            {text:"Mt k2", corrext:"false"},
-            {text:"Mt Everest", correct:"true"},
-            {text:"Mt Lhotse", correct:"false"},
-            {text:"Mt Annapurna",correcr:"false"},
+        question: "which is the hightest mountain in the world?",
+        options: [
+            { text: "Mt k2", correct: "false" },
+            { text: "Mt Everest", correct: "true" },
+            { text: "Mt Lhotse", correct: "false" },
+            { text: "Mt Annapurna", correct: "false" },
         ]
     },
-]
-console.log(questions[0].question1);
+];
+
+const questionElement = document.getElementById("questions");
+const answerButton = document.getElementById("answer-btn");
+const nextBtn = document.getElementById("next-btn");
+
+let defaultScore = 0;
+let currentQuestionIndex = 0;
+
+function startQuiz() {
+    defaultScore = 0;
+    currentQuestionIndex = 0;
+    nextBtn.innerHTML = "Next";
+    showQuestions();
+}
+startQuiz();
+function showQuestions() {
+    resetState();
+    let currentQuestion = questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex + 1;
+    questionElement.innerHTML = questionNo + "." + currentQuestion.question;
+
+    currentQuestion.options.forEach(option => {
+        const answerBtn = document.createElement("button");
+        answerBtn.classList.add("btn");
+        answerBtn.innerHTML = option.text;
+        answerButton.appendChild(answerBtn);
+        if (option.correct) {
+            answerBtn.dataset.correct = option.correct;
+        }
+        answerBtn.addEventListener("click", selectAnswer);
+    })
+}
+function selectAnswer(e) {
+    const selectElement = e.target;
+    const correctElement = selectElement.dataset.correct === "true";
+    if (correctElement) {
+        selectElement.classList.add("correct")
+    }
+    else {
+        selectElement.classList.add("incorrect")
+    }
+
+}
+
+function resetState() {
+    nextBtn.style.display = "none";
+    while (answerButton.firstChild) {
+        answerButton.removeChild(answerButton.firstChild);
+    }
+}

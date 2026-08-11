@@ -63,10 +63,10 @@ function selectAnswer(e) {
     const selectElement = e.target;
     const correctElement = selectElement.dataset.correct === "true";
     if (correctElement) {
-        selectElement.classList.add("correct")
+        selectElement.classList.add("correct");
     }
     else {
-        selectElement.classList.add("incorrect")
+        selectElement.classList.add("incorrect");
     }
 
 }

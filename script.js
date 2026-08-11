@@ -25,7 +25,8 @@ const questions = [
             { text: "Mt Lhotse", correct: "false" },
             { text: "Mt Annapurna", correct: "false" },
         ]
-    },
+    }
+
 ];
 
 const questionElement = document.getElementById("questions");
@@ -47,7 +48,6 @@ function showQuestions() {
     let currentQuestion = questions[currentQuestionIndex];
     let questionNo = currentQuestionIndex + 1;
     questionElement.innerHTML = questionNo + "." + currentQuestion.question;
-
     currentQuestion.options.forEach(option => {
         const answerBtn = document.createElement("button");
         answerBtn.classList.add("btn");
@@ -59,16 +59,52 @@ function showQuestions() {
         answerBtn.addEventListener("click", selectAnswer);
     })
 }
+
+
 function selectAnswer(e) {
     const selectElement = e.target;
-    const correctElement = selectElement.dataset.correct === "true";
+    const correctElement = selectElement.dataset.correct === true;
     if (correctElement) {
         selectElement.classList.add("correct");
+        defaultScore++;
     }
     else {
         selectElement.classList.add("incorrect");
-    }
+    };
+    Array.from(answerButton.children).forEach(button => {
+        if (button.dataset.correct === "true") {
+            button.classList.add("correct")
+        }
+        button.disabled = true;
+    });
+    nextBtn.style.display = "block";
+   
+}
 
+ nextBtn.addEventListener("click", () => {
+        if (currentQuestionIndex < questions.length) {
+            handleNextButton();
+        }
+        else {
+            startQuiz();
+        }
+    })
+
+function showScore() {
+    resetState();
+    questionElement.innerHTML = `You Scored ${defaultScore} out of ${questions.length}`
+    nextBtn.innerHTML = "Play Again!!"
+    nextBtn.style.display = "block";
+
+}
+function handleNextButton() {
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        showQuestions();
+    }
+    else {
+        showScore();
+    }
 }
 
 function resetState() {

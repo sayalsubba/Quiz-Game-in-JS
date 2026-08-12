@@ -25,6 +25,15 @@ const questions = [
             { text: "Mt Lhotse", correct: "false" },
             { text: "Mt Annapurna", correct: "false" },
         ]
+    },
+      {
+        question: "Who is the light of asia?",
+        options: [
+            { text: "Jesus Christ", correct: "false" },
+            { text: "Malala Yousafzai", correct: "false" },
+            { text: "Gautam Buddha", correct: "true" },
+            { text: "St. Joseph", correct: "false" },
+        ]
     }
 
 ];
@@ -63,7 +72,7 @@ function showQuestions() {
 
 function selectAnswer(e) {
     const selectElement = e.target;
-    const correctElement = selectElement.dataset.correct === true;
+    const correctElement = selectElement.dataset.correct === "true";
     if (correctElement) {
         selectElement.classList.add("correct");
         defaultScore++;
